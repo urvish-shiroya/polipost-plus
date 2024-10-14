@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Core</string>
+    <string name="search_hint">Search Here</string>
+    <string name="apply">Apply</string>
+    <string name="no_internet_connection">Connection Lost</string>
+    <string name="try_again">Try Again</string>
+    <string name="error_title_no_internet_connection">Connection Lost</string>
+    <string name="error_content_no_internet_connection">Please check your internet connection</string>
+    <string name="error_title_server_error">Server Error</string>
+    <string name="error_content_server_error">It seems like something went wrong. Please try again.</string>
+    <string name="error_title_no_data_found">No Data Found</string>
+    <string name="error_content_no_data_found">Oops! No data found, please Retry again.</string>
+</resources>

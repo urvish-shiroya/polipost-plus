@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iconImage"
+        android:layout_width="@dimen/_120sdp"
+        android:layout_height="0dp"
+        android:layout_marginVertical="@dimen/_5sdp"
+        app:layout_constraintBottom_toTopOf="@id/titleTextView"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/titleTextView"
+        style="@style/application_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_5sdp"
+        android:gravity="center"
+        android:textColor="@color/text_color_black"
+        app:layout_constraintBottom_toTopOf="@id/descriptionTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iconImage"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@tools:sample/full_names" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/descriptionTextView"
+        style="@style/application_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_5sdp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="10"
+        android:textColor="@color/text_color_gray"
+        app:layout_constraintBottom_toTopOf="@id/actionButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@tools:sample/lorem/random" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/actionButton"
+        style="@style/application_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/_5sdp"
+        android:background="@drawable/bg_app_button"
+        android:drawablePadding="@dimen/_6sdp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:maxLines="10"
+        android:paddingHorizontal="@dimen/_20sdp"
+        android:paddingVertical="@dimen/_8sdp"
+        android:textColor="@color/text_color_white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="@tools:sample/lorem" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

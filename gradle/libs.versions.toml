@@ -1,0 +1,50 @@
+[versions]
+agp = "8.4.1"
+kotlin = "1.9.0"
+ksp_version = "1.9.0-1.0.13"
+coreKtx = "1.13.1"
+junit = "4.13.2"
+junitVersion = "1.2.1"
+espressoCore = "3.6.1"
+appcompat = "1.7.0"
+material = "1.12.0"
+activity = "1.9.2"
+constraintlayout = "2.1.4"
+koin-bom = "4.0.0"
+retrofit = "2.9.0"
+gson = "2.10.1"
+androidx-room = "2.6.1"
+androidx-datastore = "1.1.1"
+intuit = "1.1.1"
+
+[libraries]
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
+koin-core = { module = "io.insert-koin:koin-core" }
+koin-android = { module = "io.insert-koin:koin-android" }
+koin-core-coroutines = { module = "io.insert-koin:koin-core-coroutines" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-converter = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+androidx-database-room = { group = "androidx.room", name = "room-ktx", version.ref = "androidx-room" }
+androidx-database-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "androidx-room" }
+androidx-database-room-ksp = { group = "androidx.room", name = "room-compiler", version.ref = "androidx-room" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidx-datastore" }
+sdp = { group = "com.intuit.sdp", name = "sdp-android", version.ref = "intuit" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version = "4.16.0" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version = "4.14.2" }
+lottie = { group = "com.airbnb.android", name = "lottie", version = "6.5.2" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp_version" }
+

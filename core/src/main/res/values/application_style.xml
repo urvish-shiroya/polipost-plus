@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Application Text Styles -->
+    <style name="application_title">
+        <item name="android:fontFamily">@font/app_semi_bold</item>
+        <item name="android:textSize">@dimen/_14sdp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="application_description">
+        <item name="android:fontFamily">@font/app_regular</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="application_button">
+        <item name="android:fontFamily">@font/app_medium</item>
+        <item name="android:textSize">@dimen/_13sdp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="application_search_title">
+        <item name="android:fontFamily">@font/app_medium</item>
+        <item name="android:textSize">@dimen/_13sdp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+
+    <!-- Application Tabs Styles -->
+    <style name="application_selected_tabs" parent="TextAppearance.Design.Tab">
+        <item name="android:fontFamily">@font/app_semi_bold</item>
+        <item name="android:textColor">@color/app_color</item>
+        <item name="android:textSize">@dimen/_13sdp</item>
+    </style>
+
+    <style name="application_unselected_tabs" parent="TextAppearance.Design.Tab">
+        <item name="android:fontFamily">@font/app_regular</item>
+        <item name="android:textColor">@color/text_color_black</item>
+        <item name="android:textSize">@dimen/_12sdp</item>
+    </style>
+
+    <style name="application_tabs" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="tabSelectedTextAppearance">@style/application_selected_tabs</item>
+        <item name="tabTextAppearance">@style/application_unselected_tabs</item>
+    </style>
+
+
+    <!-- Application Images Styles -->
+    <style name="application_template">
+        <item name="shapeCornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/_8sdp</item>
+    </style>
+
+    <!-- Bottom Sheet Dialog Styles -->
+    <style name="rounded_bottom_sheet_background" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_app_bottom_sheet_dialog</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="application_bottom_sheet" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/rounded_bottom_sheet_background</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
+</resources>
