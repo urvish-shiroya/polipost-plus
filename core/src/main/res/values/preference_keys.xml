@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="pref_key_user_id">user_id</string>
+    <string name="pref_key_is_premium_user" translatable="false">isPremiumUser</string>
+    <string name="pref_key_user_id" translatable="false">user_id</string>
+    <string name="pref_key_political_fll_category_list" translatable="false">political_fll_category_list</string>
+    <string name="pref_key_user_profile" translatable="false">user_profile</string>
 </resources>

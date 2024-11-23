@@ -13,6 +13,9 @@ import androidx.annotation.Keep
 import androidx.core.content.ContextCompat
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.polipost.core.R
+import com.polipost.core.network.responses.GetUserProfileResponse
+import com.polipost.core.store.preference.PreferenceHelper
 import java.io.File
 
 @Keep
@@ -27,8 +30,13 @@ inline fun <reified T> String.to(): T = gson.fromJson<T>(this, object : TypeToke
 @Keep
 inline fun <reified T> String.toAny(cls: Class<T>): T = gson.fromJson<T>(this, cls)
 
+@Keep
 inline fun <reified T : Any> String?.convertTo(): T? {
-    return this?.let { Gson().fromJson(it, T::class.java) as T }
+    if (checkStringValue(this)) {
+        return Gson().fromJson(this.toString(), T::class.java) as? T?
+    } else {
+        return null
+    }
 }
 
 @SuppressLint("HardwareIds")
@@ -37,7 +45,7 @@ internal fun Context.androidId(): String? {
 }
 
 fun isTestMode(): Boolean {
-    return File(Environment.getExternalStorageDirectory(), "TEST").exists()
+    return "${Environment.getExternalStorageDirectory()}/TEST".asFile().checkIsExists()
 }
 
 fun <T> List<T>.isPositionValid(position: Int): Boolean {

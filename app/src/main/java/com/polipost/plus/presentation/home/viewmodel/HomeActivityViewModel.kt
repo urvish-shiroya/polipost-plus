@@ -28,17 +28,18 @@ class HomeActivityViewModel(private val apiServices: ApiServices) : BaseViewMode
                     val mParams = mutableMapOf<String, Any>()
                     mParams[mContext.getCompatString(com.polipost.core.R.string.api_key_user_id)] = mContext.userId
                     apiServices.getPreloadData(mParams)
-                }.fold({
-                    PreferenceHelper["political_fll_category_list"] = it.politicalFllCategoryList.toJson()
-                }, {})
+                }.onSuccess {
+                    val convertedJson = it.politicalFllCategoryList.toJson()
+                    PreferenceHelper[mContext.getCompatString(com.polipost.core.R.string.pref_key_political_fll_category_list)] = convertedJson
+                }
             }
         }
     }
 
-    fun getPoliticalFllCategoryFromPreference() {
+    fun getPoliticalFllCategoryFromPreference(mContext: Context) {
         backgroundScope.launch {
             kotlin.runCatching {
-                val preferenceData = PreferenceHelper["political_fll_category_list", ""]
+                val preferenceData = PreferenceHelper[mContext.getCompatString(com.polipost.core.R.string.pref_key_political_fll_category_list), ""]
                 Gson().fromJson<List<PreloadResponse.FLL>>(preferenceData, object : TypeToken<List<PreloadResponse.FLL>>() {}.type) ?: listOf()
             }.onSuccess {
                 _fllCategoryList.tryEmit(it)

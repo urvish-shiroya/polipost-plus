@@ -1,11 +1,11 @@
 package com.polipost.core.network
 
 import com.google.gson.JsonElement
+import com.polipost.core.network.responses.GetUserProfileResponse
 import com.polipost.core.network.responses.HomeCategoryResponse
 import com.polipost.core.network.responses.HomeResponse
 import com.polipost.core.network.responses.PreloadResponse
 import retrofit2.http.Body
-import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ApiServices {
@@ -24,5 +24,8 @@ interface ApiServices {
 
     @POST("preload")
     suspend fun getPreloadData(@Body mParams: MutableMap<String, Any>): PreloadResponse
+
+    @POST("profile_user_get")
+    suspend fun getUserProfile(@Body mParams: MutableMap<String, Any>): GetUserProfileResponse
 
 }

@@ -53,6 +53,7 @@ dependencies {
 
     api(libs.retrofit)
     api(libs.retrofit.converter)
+    api(libs.okhttp3.interceptor)
 
     api(libs.glide)
     annotationProcessor(libs.glide.compiler)

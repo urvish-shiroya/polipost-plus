@@ -1,7 +1,6 @@
 package com.polipost.plus.presentation.home.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import com.polipost.core.extentions.changeStatusBarColor
 import com.polipost.core.extentions.launchActivity
@@ -42,7 +41,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             }
 
             imageSearch.setOnSafeClickListener {
-//                CategoryDialog(this@HomeActivity).show()
                 showPartyBottomSheet()
             }
         }
@@ -64,7 +62,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         }
 
         mFragmentManager.fragments.forEach {
-            if (it != null && it == existingFragment) {
+            if (it != null && it != existingFragment) {
                 mFragmentTransaction.hide(it)
             }
         }

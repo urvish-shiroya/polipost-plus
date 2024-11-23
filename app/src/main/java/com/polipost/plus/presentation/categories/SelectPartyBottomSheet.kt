@@ -1,7 +1,6 @@
 package com.polipost.plus.presentation.categories
 
 import android.content.Context
-import android.util.Log
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -13,10 +12,12 @@ import com.polipost.core.extentions.checkStringValue
 import com.polipost.core.extentions.gone
 import com.polipost.core.extentions.loadImageFromUrl
 import com.polipost.core.extentions.setOnSafeClickListener
+import com.polipost.core.extentions.showToast
 import com.polipost.core.extentions.visible
 import com.polipost.core.network.responses.PreloadResponse
 import com.polipost.core.ui.AdaptiveAdapter
 import com.polipost.core.ui.BaseBottomSheetDialog
+import com.polipost.plus.R
 import com.polipost.plus.databinding.BottomsheetSelectPartyBinding
 import com.polipost.plus.databinding.ItemFllCategoryBinding
 import com.polipost.plus.presentation.home.viewmodel.HomeActivityViewModel
@@ -55,6 +56,14 @@ class SelectPartyBottomSheet(private val mContext: Context) :
                 mBinding?.errorContainer?.visible()
             }
         }
+
+        mBinding?.buttonApply?.setOnSafeClickListener {
+            if (checkStringValue(selectedItemId)) {
+                dismiss()
+            } else {
+                mContext.showToast(R.string.please_select_at_least_one_category)
+            }
+        }
     }
 
     private fun attachObserver() {
@@ -66,7 +75,7 @@ class SelectPartyBottomSheet(private val mContext: Context) :
                 }
             }
         }
-        mViewModel.getPoliticalFllCategoryFromPreference()
+        mViewModel.getPoliticalFllCategoryFromPreference(mContext)
     }
 
     private val diffCallback = object : DiffUtil.ItemCallback<PreloadResponse.FLL>() {
@@ -83,15 +92,17 @@ class SelectPartyBottomSheet(private val mContext: Context) :
         if (adaptiveAdapter == null) {
             adaptiveAdapter = AdaptiveAdapter(
                 bindingInflater = ItemFllCategoryBinding::inflate,
-                bindView = { itemBinding, currentItem, _ ->
+                bindView = { itemBinding, currentItem, position ->
                     if (selectedItemId == currentItem.id) {
-                        Log.e("@@@", "initializeAdapterIfRequire: ${currentItem.categoryName}" )
+                        itemBinding.selectedIcon.setImageResource(com.polipost.core.R.drawable.ic_checked)
+                    } else {
+                        itemBinding.selectedIcon.setImageResource(com.polipost.core.R.drawable.ic_unchecked)
                     }
                     itemBinding.categoryName.text = currentItem.categoryName.toString()
                     itemBinding.imageIcon.loadImageFromUrl(currentItem.logos.firstOrNull())
                     itemBinding.root.setOnSafeClickListener {
                         selectedItemId = currentItem.id
-                        adaptiveAdapter?.notifyDataSetChanged()
+                        adaptiveAdapter?.notifyItemRangeChanged(0, mDataList?.size ?: 0)
                     }
                 },
                 diffCallback = diffCallback

@@ -1,11 +1,13 @@
 package com.polipost.core.di
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Room
 import com.google.gson.GsonBuilder
 import com.polipost.core.network.ApiServices
 import com.polipost.core.store.database.AppDatabase
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -16,7 +18,9 @@ val databaseModule = module {
 }
 
 val networkModule = module {
-    single { buildRetrofit(getProperty("server_url")) }
+    single { createOkHttpClient() }
+
+    single { buildRetrofit(getProperty("server_url"), get()) }
 
     single { createWebService(get()) }
 }
@@ -31,14 +35,22 @@ private fun createDatabase(mContext: Context, databaseName: String): AppDatabase
     ).build()
 }
 
-private fun buildRetrofit(serverUrl: String): Retrofit {
+private fun buildRetrofit(serverUrl: String, defaultClient: OkHttpClient): Retrofit {
     return Retrofit.Builder()
         .baseUrl(serverUrl)
         .addConverterFactory(GsonConverterFactory.create(GsonBuilder().serializeNulls().create()))
-        .client(OkHttpClient.Builder().build())
+        .client(defaultClient)
         .build()
 }
 
 private fun createWebService(retrofit: Retrofit): ApiServices {
     return retrofit.create(ApiServices::class.java)
+}
+
+private fun createOkHttpClient(): OkHttpClient {
+    return OkHttpClient.Builder()
+        .addInterceptor(HttpLoggingInterceptor().apply {
+            this.level = HttpLoggingInterceptor.Level.BODY
+        })
+        .build()
 }

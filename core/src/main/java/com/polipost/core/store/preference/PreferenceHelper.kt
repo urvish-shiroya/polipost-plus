@@ -3,9 +3,17 @@ package com.polipost.core.store.preference
 import android.content.Context
 import android.content.SharedPreferences
 import com.polipost.core.CoreApplication
+import com.polipost.core.R
+import com.polipost.core.extentions.convertTo
+import com.polipost.core.extentions.getCompatString
+import com.polipost.core.extentions.ifNotNull
+import com.polipost.core.extentions.isNotNull
+import com.polipost.core.extentions.toJson
+import com.polipost.core.network.responses.GetUserProfileResponse
 
 object PreferenceHelper {
     private const val PREFERENCE_NAME = "polipost"
+    private var mCacheMap: MutableMap<String, Any?> = mutableMapOf()
 
     fun getCustomSharedPreference(): SharedPreferences? =
         CoreApplication.getCoreInstance()?.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
@@ -42,5 +50,22 @@ object PreferenceHelper {
                 else -> throw UnsupportedOperationException("Not yet implemented")
             }
         } ?: throw NullPointerException("Preference Was null instance")
+    }
+
+    fun Context.setUserProfileInPreference(profile: GetUserProfileResponse.Profile?) {
+        if (profile.isNotNull()) {
+            mCacheMap[getCompatString(R.string.pref_key_user_profile)] = profile
+            set(getCompatString(R.string.pref_key_user_profile), profile.toJson())
+        }
+    }
+
+    fun Context.getUserProfileFromPreference(): GetUserProfileResponse.Profile? {
+        return if (mCacheMap.containsKey(getCompatString(R.string.pref_key_user_profile)) && mCacheMap[getCompatString(R.string.pref_key_user_profile)] != null) {
+            mCacheMap[getCompatString(R.string.pref_key_user_profile)] as? GetUserProfileResponse.Profile?
+        } else {
+            val storedData = get(getCompatString(R.string.pref_key_user_profile), "").convertTo<GetUserProfileResponse.Profile>()
+            mCacheMap[getCompatString(R.string.pref_key_user_profile)] = storedData
+            storedData
+        }
     }
 }

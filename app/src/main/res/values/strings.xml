@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Polipost Plus</string>
     <string name="setting">Settings</string>
+    <string name="please_select_at_least_one_category">Please select at least one category.</string>
 </resources>

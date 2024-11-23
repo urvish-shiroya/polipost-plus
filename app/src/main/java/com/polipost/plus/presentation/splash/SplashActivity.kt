@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import com.polipost.core.extentions.gone
+import com.polipost.core.extentions.isNull
 import com.polipost.core.extentions.launchActivity
 import com.polipost.core.extentions.setSystemBarInsets
 import com.polipost.core.extentions.showToast
 import com.polipost.core.extentions.visible
 import com.polipost.core.network.NetworkResponse
+import com.polipost.core.store.preference.PreferenceHelper.setUserProfileInPreference
 import com.polipost.core.ui.BaseActivity
 import com.polipost.plus.databinding.ActivitySplashBinding
 import com.polipost.plus.presentation.home.ui.HomeActivity
@@ -42,8 +44,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
 
                 is NetworkResponse.Success -> {
                     mBinding?.errorContainer?.gone()
-                    launchActivity<HomeActivity> { }
-                    finish()
+                    mViewModel.getUserProfile(mContext = this)
                 }
 
                 is NetworkResponse.Failure -> {
@@ -53,6 +54,28 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                     }
                     mBinding?.errorContainer?.visible()
                     showToast(networkResponse.error?.message.toString())
+                }
+            }
+        }
+
+        mViewModel.userProfiles.observe(this) { networkResponse ->
+            when (networkResponse) {
+                is NetworkResponse.Default -> {}
+                is NetworkResponse.Failure -> {
+                    mBinding?.errorContainer?.displayError(networkResponse.error)
+                    mBinding?.errorContainer?.setOnActionClickListener {
+                        mViewModel.getUserPackage(this)
+                    }
+                    mBinding?.errorContainer?.visible()
+                }
+                is NetworkResponse.Loading -> {
+                    mBinding?.errorContainer?.gone()
+                }
+                is NetworkResponse.Success -> {
+                    mBinding?.errorContainer?.gone()
+                    setUserProfileInPreference(networkResponse.data?.userProfiles?.firstOrNull())
+                    launchActivity<HomeActivity> { }
+                    finish()
                 }
             }
         }

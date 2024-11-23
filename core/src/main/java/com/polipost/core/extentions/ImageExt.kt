@@ -1,5 +1,6 @@
 package com.polipost.core.extentions
 
+import androidx.annotation.DrawableRes
 import androidx.appcompat.widget.AppCompatImageView
 import com.bumptech.glide.Glide
 
@@ -12,4 +13,10 @@ fun AppCompatImageView?.loadImageFromUrl(imageUrl: String?, placeHolder: Int = 0
             Glide.with(imageView.context).load(imageUrl).into(imageView)
         }
     }
+}
+
+fun AppCompatImageView?.setDrawable(@DrawableRes drawable: Int) {
+    val mImageView = this ?: return
+    val mContext = mImageView.context ?: return
+    mImageView.setImageDrawable(mContext.getCompatDrawable(drawable))
 }
