@@ -5,7 +5,7 @@ import androidx.core.content.ContextCompat
 import java.io.File
 
 private fun Context.getBaseDirectory(): File {
-    return ContextCompat.getExternalFilesDirs(this, null)[0]
+    return filesDir
 }
 
 fun Context.getTemplatesDirectory(): File {

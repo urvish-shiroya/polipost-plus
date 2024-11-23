@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="const_context_null_error" translatable="false">Context is null</string>
+    <string name="const_output_file_null_error" translatable="false">Output Directory was null</string>
+    <string name="const_bitmap_null_error" translatable="false">Bitmap was null</string>
+    <string name="const_url_null_or_empty_error" translatable="false">URL was null or empty</string>
+</resources>

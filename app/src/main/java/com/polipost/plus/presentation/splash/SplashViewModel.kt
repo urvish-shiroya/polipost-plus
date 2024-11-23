@@ -1,9 +1,9 @@
 package com.polipost.plus.presentation.splash
 
 import android.content.Context
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.polipost.core.extentions.asFile
 import com.polipost.core.extentions.backgroundScope
 import com.polipost.core.extentions.downloadImageFromUrl
 import com.polipost.core.extentions.getCompatString
@@ -55,11 +55,11 @@ class SplashViewModel(private val apiServices: ApiServices) : BaseViewModel() {
                 }.fold({ response ->
                     mContext.downloadImageFromUrl(
                         imageUrl = response.userProfiles?.firstOrNull()?.profilePicture01,
-                        outputFile = (mContext.getProfilesDirectory().absolutePath + "/profile_01.png").asFile(),
-                        callback = { result ->
-                            result.onSuccess {
-                                _userProfiles.postValue(NetworkResponse.Success(response))
-                            }
+                        outputDirectory = mContext.getProfilesDirectory(),
+                        fileName = "profile_01.png",
+                        compressFormat = Bitmap.CompressFormat.PNG,
+                        callback = {
+                            _userProfiles.postValue(NetworkResponse.Success(response))
                         }
                     )
                 }, {

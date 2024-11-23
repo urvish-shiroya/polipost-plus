@@ -8,6 +8,7 @@ import android.graphics.Color
 import android.graphics.Matrix
 import android.util.Base64
 import android.view.View
+import com.polipost.core.R
 import java.io.File
 import java.io.FileOutputStream
 import java.net.URL
@@ -60,7 +61,8 @@ fun String?.getBitmapFromBase64(): Bitmap? {
 
 fun Context?.downloadImageFromUrl(
     imageUrl: String?,
-    outputFile: File?,
+    outputDirectory: File?,
+    fileName: String,
     compressFormat: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG,
     callback: (Result<File>) -> Unit
 ) {
@@ -68,8 +70,8 @@ fun Context?.downloadImageFromUrl(
         ensureIsOnMainThread { callback(Result.failure(Throwable("Context is null"))) }
         return
     }
-    val mOutputFile = outputFile ?: kotlin.run {
-        ensureIsOnMainThread { callback(Result.failure(Throwable("Output file is null"))) }
+    val mOutputFile = outputDirectory ?: kotlin.run {
+        ensureIsOnMainThread { callback(Result.failure(Throwable(mContext.getCompatString(R.string.const_output_file_null_error)))) }
         return
     }
     ensureIsOnBackgroundThread {
@@ -83,20 +85,22 @@ fun Context?.downloadImageFromUrl(
                     } ?: null
                 }
 
+                mOutputFile.createDirectory() // Required.
+                val finalDestination = File(mOutputFile, fileName)
                 if (mSampleBitmap.isNotNull()) {
-                    val mOutputStream = FileOutputStream(mOutputFile)
+                    val mOutputStream = FileOutputStream(finalDestination)
                     mSampleBitmap?.compress(compressFormat, 100, mOutputStream)
                     mOutputStream.flush()
                     mOutputStream.close()
-                    ensureIsOnMainThread { callback(Result.success(mOutputFile)) }
+                    ensureIsOnMainThread { callback(Result.success(finalDestination)) }
                 } else {
-                    ensureIsOnMainThread { callback(Result.failure(Throwable("Bitmap is null"))) }
+                    ensureIsOnMainThread { callback(Result.failure(Throwable(mContext.getCompatString(R.string.const_bitmap_null_error)))) }
                 }
             } catch (e: Exception) {
                 ensureIsOnMainThread { callback(Result.failure(e)) }
             }
         } else {
-            ensureIsOnMainThread { callback(Result.failure(Throwable("Url is null or empty"))) }
+            ensureIsOnMainThread { callback(Result.failure(Throwable(mContext.getCompatString(R.string.const_url_null_or_empty_error)))) }
         }
     }
 }
